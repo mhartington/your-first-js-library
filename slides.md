@@ -1,52 +1,93 @@
 ---
 # try also 'default' to start simple
-theme: default
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-# background: https://source.unsplash.com/collection/94734566/1920x1080
-# apply any windi css classes to the current slide
-class: 'text-center'
-# https://sli.dev/custom/highlighters.html
+theme: the-unnamed
+# class: 'text-center'
 highlighter: shiki
-# show line numbers in code blocks
-lineNumbers: false
-# some information about the slides, markdown enabled
-info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
-
-  Learn more at [Sli.dev](https://sli.dev)
-# persist drawings in exports and build
-drawings:
-  persist: false
-# page transition
+lineNumbers: true
 transition: fade-out
 # use UnoCSS
-css: unocss
+# css: unocss
+layout: section
+---
+
+# Question
+
+<v-click>
+    <p>Do you have one of the following...</p>
+</v-click>
+
+<ul>
+    <v-click>
+        <li><code>utils</code></li>
+    </v-click>
+    <v-click>
+        <li><code>extras</code></li>
+    </v-click>
+    <v-click>
+        <li><code>util.js</code></li>
+    </v-click>
+    <v-click>
+        <li><code>util.ts</code></li>
+    </v-click>
+</ul>
+
+---
+layout: section
+---
+
+## Then you might have a problem
+
+---
+layout: image-right
+image: 'https://qph.fs.quoracdn.net/main-qimg-c8781a4bb1f17e330b50cb35f851da05-c'
+class: aling-middle
+---
+
+<div style="height: 100%; width:100%; justify-content: center; justify-content: center;display: flex;flex-direction: column;">
+
+
+## My goal
+
+<p>Get You to</p>
+<p>SHIP IT</p>
+
+</div>
+
+---
+layout: cover
 ---
 
 # From Zero to Hero
 
 Building and Shipping Your First JavaScript Library
 
-Mike Hartington
-
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
-
+---
+layout: about-me
+helloMsg: Hello!
+name: Mike Hartington
+imageSrc: https://cdn.bsky.social/imgproxy/NLfAgX_EC-YWBNneVYGfTvaYOQ5mROH9kgFoEcXy2OY/rs:fill:1000:1000:1:0/plain/bafkreih5czye4acyme3j5ckt4bmwkypwqyqcq4mgecjq55g2lavdy573n4@jpeg
+job: 'Director of DevRel @ ionic'
+social1: '@mhartington'
+social2: '@mhartington.io'
 ---
 
-# Do you have?
-
-- `utils`
-- `extras`
-- `util.js`
-- `util.ts`
+<!--  My Notes -->
 
 ---
+layout:section
+---
 
+<div style="height: 100%; align-items: start; justify-content: center;display: flex;flex-direction: column;">
 
+## Why Even?
+
+- Code isolation
+- Sharing across projects
+- Versioned seprate from everything else
+
+</div>
+
+---
 
 ---
 
@@ -56,16 +97,16 @@ Use code snippets and get the highlighting directly![^1]
 
 ```ts {all|2|1-6|9|all}
 interface User {
-  id: number
-  firstName: string
-  lastName: string
-  role: string
+  id: number;
+  firstName: string;
+  lastName: string;
+  role: string;
 }
 
 function updateUser(id: number, update: User) {
-  const user = getUser(id)
-  const newUser = { ...user, ...update }
-  saveUser(id, newUser)
+  const user = getUser(id);
+  const newUser = { ...user, ...update };
+  saveUser(id, newUser);
 }
 ```
 
@@ -127,10 +168,9 @@ Also, HTML elements are valid:
 </div>
 -->
 
+---
 
----
-class: px-20
----
+## class: px-20
 
 # Themes
 
@@ -160,20 +200,15 @@ Read more about [How to use a theme](https://sli.dev/themes/use.html) and
 check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
 
 ---
-preload: false
----
+
+## preload: false
 
 # Animations
 
 Animations are powered by [@vueuse/motion](https://motion.vueuse.org/).
 
 ```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }">
-  Slidev
-</div>
+<div v-motion :initial="{ x: -80 }" :enter="{ x: 0 }">Slidev</div>
 ```
 
 <div class="w-60 relative mt-6">
@@ -246,6 +281,7 @@ LaTeX is supported out-of-box powered by [KaTeX](https://katex.org/).
 Inline $\sqrt{3x-1}+(1+x)^2$
 
 Block
+
 $$
 \begin{array}{c}
 
@@ -324,13 +360,17 @@ database "MySql" {
 [Learn More](https://sli.dev/guide/syntax.html#diagrams)
 
 ---
+
 src: ./pages/multiple-entries.md
 hide: false
+
 ---
 
 ---
+
 layout: center
 class: text-center
+
 ---
 
 # Learn More
