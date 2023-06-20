@@ -1,12 +1,10 @@
 ---
-# try also 'default' to start simple
 theme: the-unnamed
-# class: 'text-center'
 highlighter: shiki
 lineNumbers: true
 transition: fade-out
 # use UnoCSS
-# css: unocss
+css: unocss
 layout: section
 ---
 
@@ -18,48 +16,32 @@ layout: section
 
 <ul>
     <v-click>
-        <li><code>utils</code></li>
+        <li><code>utils/</code></li>
     </v-click>
     <v-click>
-        <li><code>extras</code></li>
+        <li><code>extras/</code></li>
     </v-click>
     <v-click>
-        <li><code>util.js</code></li>
+        <li><code>utils.js</code></li>
     </v-click>
     <v-click>
-        <li><code>util.ts</code></li>
+        <li><code>utils.ts</code></li>
     </v-click>
 </ul>
 
 ---
-layout: section
+
+### And are they copied from different projects?
+
 ---
 
 ## Then you might have a problem
 
 ---
-layout: image-right
-image: 'https://qph.fs.quoracdn.net/main-qimg-c8781a4bb1f17e330b50cb35f851da05-c'
-class: aling-middle
----
-
-<div style="height: 100%; width:100%; justify-content: center; justify-content: center;display: flex;flex-direction: column;">
-
-
-## My goal
-
-<p>Get You to</p>
-<p>SHIP IT</p>
-
-</div>
-
----
 layout: cover
 ---
-
 # From Zero to Hero
-
-Building and Shipping Your First JavaScript Library
+## Building and Shipping Your First JavaScript Library
 
 ---
 layout: about-me
@@ -74,305 +56,421 @@ social2: '@mhartington.io'
 <!--  My Notes -->
 
 ---
-layout:section
+
+# What is a JS Library?
+
+<p v-click>Spoiler, it's complicated</p>
+
 ---
 
-<div style="height: 100%; align-items: start; justify-content: center;display: flex;flex-direction: column;">
+## According to npm:
 
-## Why Even?
+> A package is a file or directory that is described by a package.json file. A package must contain a **package.json** file in order to be published to the npm registry.
+
+<!--
+Basically, a bit of code that you can publish and make available
+-->
+
+---
+
+## Very Basic
+
+As bare bones as it can be
+
+
+```txt {all|3}
+./my-lib
+|-- package.json
+|-- index.js
+```
+
+Package.json
+
+```json {all|4}
+{
+  "name": "my-lib",
+  "version": "1.0.0",
+  "main": "index.js",
+}
+```
+
+---
+
+If it's that simple
+
+Let's make our own package!
+
+---
+
+# Why Bother?
 
 - Code isolation
 - Sharing across projects
 - Versioned seprate from everything else
 
-</div>
 
 ---
 
+## `To the Terminal!`
+
 ---
 
-# Code
+## Summary
 
-Use code snippets and get the highlighting directly![^1]
+---
 
-```ts {all|2|1-6|9|all}
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  role: string;
-}
+## File Structure
 
-function updateUser(id: number, update: User) {
-  const user = getUser(id);
-  const newUser = { ...user, ...update };
-  saveUser(id, newUser);
-}
+```shell
+.
+├── index.js
+├── node_modules/
+├── package-lock.json
+├── package.json
+└── safe.js
 ```
 
-<arrow v-click="3" x1="400" y1="420" x2="230" y2="330" color="#564" width="3" arrowSize="1" />
-
-[^1]: [Learn More](https://sli.dev/guide/syntax.html#line-highlighting)
-
-<style>
-.footnotes-sep {
-  @apply mt-20 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
-
 ---
 
-# Components
+## Requiring Dependecies
 
-<div grid="~ cols-2 gap-4">
-<div>
+```js
+const os = require('os');
+const path = require('path');
+const stream = require('stream');
 
-You can use Vue components directly inside your slides.
+const fs = require('fs-extra');
 
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
+const statSafe = require('./safe').stat;
+const readdirSafe = require('./safe').readdir;
 ```
 
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
+---
 
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
+## Exporting Functions
 
-</div>
-<div>
+```js
+const statSafe = require('./safe').stat;
+const readdirSafe = require('./safe').readdir;
+async function fileToString(filePath) {...}
 
-```html
-<Tweet id="1390115482657726468" />
+module.exports = {
+  statSafe,
+  readdirSafe,
+  fileToString,
+};
 ```
 
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
-
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
-
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
-
 ---
 
-## class: px-20
+## Exposing to Node
 
-# Themes
-
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
-
-<div grid="~ cols-2 gap-2" m="-t-2">
-
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/themes/use.html) and
-check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
-
----
-
-## preload: false
-
-# Animations
-
-Animations are powered by [@vueuse/motion](https://motion.vueuse.org/).
-
-```html
-<div v-motion :initial="{ x: -80 }" :enter="{ x: 0 }">Slidev</div>
-```
-
-<div class="w-60 relative mt-6">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-square.png"
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-circle.png"
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-triangle.png"
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
+```json
+{
+  "name": "mh-file-utils",
+  "version": "0.0.1",
+  "main": "index.js",
+  "dependencies": {
+    "fs-extra": "^11.1.1"
   }
 }
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 40, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn More](https://sli.dev/guide/animations.html#motion)
-
-</div>
+```
 
 ---
 
-# LaTeX
+## Congrats
 
-LaTeX is supported out-of-box powered by [KaTeX](https://katex.org/).
-
-<br>
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-
-$$
-\begin{array}{c}
-
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
-= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
-
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
-
-\nabla \cdot \vec{\mathbf{B}} & = 0
-
-\end{array}
-$$
-
-<br>
-
-[Learn more](https://sli.dev/guide/syntax#latex)
+You just published an npm package 🎉
 
 ---
 
-# Diagrams
+## But it's 2023
 
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
+---
 
-<div class="grid grid-cols-3 gap-10 pt-4 -mb-6">
+# The CJS-ESM Problem
 
-```mermaid {scale: 0.5}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
+---
+
+## What is CJS?
+
+- CommonJS: Package format from 2009
+- Uses `requires` and `module.exports`
+- Mainly only used in Node
+
+---
+
+## What is ESM?
+
+- ES Modules: Package format from 2015
+- Uses `import` and `export`
+- Browser, Node, and beyond!
+
+<!-- # Probably the most familiar format for web devs -->
+
+---
+
+- Both `ESM` and `CJS` are supported in Node*
+- Up to package authors to configure
+- It can be...confusing
+
+---
+
+## `To the Terminal!`
+
+---
+
+## Summary
+
+---
+
+## File Structure
+
+```shell
+.
+├── index.mjs
+├── node_modules
+├── package-lock.json
+├── package.json
+└── safe.mjs
 ```
 
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
+---
+
+## Requiring Dependecies
+
+```js
+import { readFile } from 'fs/promises'
+import 'fs-extra/esm';
+
+import { stat as statSafe, readdir as readdirSafe } from './safe.mjs';
 ```
 
-```plantuml {scale: 0.7}
-@startuml
+---
 
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
+## Exporting Functions
 
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
+```js
+export default {
+  statSafe,
+  readdirSafe,
+  fileToString,
+};
+```
 
-cloud {
-  [Example 1]
-}
+---
 
+## Exposing to Node
 
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
+```json {4}
+{
+  "name": "mh-file-utils",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "fs-extra": "^11.1.1"
   }
-  frame "Foo" {
-    [Frame 4]
-  }
 }
-
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
 ```
 
-</div>
+---
 
-[Learn More](https://sli.dev/guide/syntax.html#diagrams)
+## Congrats
+
+It's about to get more complicated 🙃
 
 ---
 
-src: ./pages/multiple-entries.md
-hide: false
+# Main vs Module vs Exports
+
 
 ---
 
+## `main`
+`"main": "./index.cjs"`
+
+- CJS was exposing the main entry
+- Only supports one entry point
+- Not deprecated, but specialized
+
 ---
 
-layout: center
-class: text-center
+## `module`
+`"module": "./index.mjs"`
+
+- Older ESM-older entry point
+- Only one ESM entry point
+- Not recommended (expect for TypeScript)
 
 ---
 
-# Learn More
+## `exports`
 
-[Documentations](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
+
+- Object for defining multiple entry points
+- Mostly replaces older `module`
+- Supports both ESM & CJS
+
+---
+
+
+## `To the Terminal!`
+
+---
+
+## Summary
+
+---
+
+- Use `exports` when possible
+- ESM should be the default (it's 2023)
+- [Dual Packages](https://nodejs.org/api/packages.html#dual-commonjses-module-packages) should be avoided
+
+---
+
+# Adding a build step
+
+---
+
+## Build Process
+- Only if you need it
+- Simplifies what you ship
+- Can make dev more complex
+
+---
+
+## `tsup`
+- `esbuild` based build system
+- JavaScript, TypeScript, and more
+- It's not webpack 🎉
+
+---
+
+## `To the Terminal!`
+
+---
+
+## Alternatives
+
+- unbuild (unified not "un")
+- Rebust ecosystem
+- Used by vite (internall), and others
+
+---
+
+<Tweet id="1662254955007229952" />
+
+---
+
+# Automation
+
+Making releasing this easy
+
+---
+
+## [Conventional Commits](https://www.conventionalcommits.org)
+- Meaningful commits to drive versioning
+- `chore()`, `feat(scope)`, `BREAKING`
+- Makes your team write good messages
+
+---
+
+## Semantic Release
+- Fully automated release process
+- Commit-drive versioning
+- Connect with CI to handle relese process
+
+[semantic-release-cli](https://github.com/semantic-release/semantic-release/blob/master/docs/usage/getting-started.md#getting-started)
+
+
+---
+
+## `To the Terminal!`
+
+---
+
+## Summary
+
+---
+
+## Init `semantic-release`
+
+```shell
+npx semantic-release-cli setup
+? What is your npm registry? 'https://registry.npmjs.org/'
+? What is your npm username? 'mhartington'
+? What is your npm password? '[hidden]'
+? Provide a GitHub Personal Access Token? ''
+? What CI are you using? 'Github Actions'
+```
+
+---
+
+## Add a workflow
+
+```yml
+name: CI
+on:
+  push:
+    branches:
+      - stable
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm build
+      - name: Release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm run semantic-release
+```
+
+---
+
+## Have meaningful commits
+
+```shell
+git commit -m 'feat(scope): add a new feature'
+git commit -m 'chore(): update formatting'
+git commit -m 'fix(scope): return correct error code'
+```
+
+---
+
+### Congrats, you've shipped your fist Library!
+
+---
+
+## Wrapping up
+- You do not need to do all of this
+- A simple `package.json` + `index.js` is also valid
+- JS Ecosystem is confusing 🙃
+- But you got this
+
+---
+
+[mhartington/first-js-lib-demo](https://github.com/mhartington/first-js-lib-demo)
+
+Branches for references
+- `main`
+- `esm-port`
+- `esm-cjs`
+- `esm-better`
+- `automation`
+
+---
+
+# Questions?
+
+<br />
+<br />
+
+## &lt;/html&gt;
