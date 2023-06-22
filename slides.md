@@ -1,11 +1,13 @@
 ---
+title: "You're first JavaScript library"
 theme: the-unnamed
 highlighter: shiki
 lineNumbers: true
 transition: fade-out
-# use UnoCSS
 css: unocss
 layout: section
+---
+
 ---
 
 # Question
@@ -106,7 +108,7 @@ Let's make our own package!
 
 - Code isolation
 - Sharing across projects
-- Versioned seprate from everything else
+- Versioned separate from everything else
 
 
 ---
@@ -379,7 +381,7 @@ Making releasing this easy
 ## Semantic Release
 - Fully automated release process
 - Commit-drive versioning
-- Connect with CI to handle relese process
+- Connect with CI to handle release process
 
 [semantic-release-cli](https://github.com/semantic-release/semantic-release/blob/master/docs/usage/getting-started.md#getting-started)
 
@@ -445,7 +447,7 @@ git commit -m 'fix(scope): return correct error code'
 
 ---
 
-### Congrats, you've shipped your fist Library!
+### Congrats, you've shipped your first Library!
 
 ---
 
